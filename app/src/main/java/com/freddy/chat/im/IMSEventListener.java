@@ -105,11 +105,12 @@ public class IMSEventListener implements OnEventListener {
         MessageProtobuf.Head.Builder headBuilder = MessageProtobuf.Head.newBuilder();
         headBuilder.setMsgId(UUID.randomUUID().toString());
         headBuilder.setMsgType(MessageType.HANDSHAKE.getMsgType());
-        headBuilder.setFromId(userId);
+        headBuilder.setFromId("9999");
         headBuilder.setTimestamp(System.currentTimeMillis());
 
         JSONObject jsonObj = new JSONObject();
-        jsonObj.put("token", token);
+//        jsonObj.put("token", token);
+        jsonObj.put("deviceId", token);
         headBuilder.setExtend(jsonObj.toString());
         builder.setHead(headBuilder.build());
 

@@ -2,6 +2,7 @@ package com.freddy.im.netty;
 
 import com.alibaba.fastjson.JSONObject;
 import com.freddy.im.IMSConfig;
+import com.freddy.im.StringUtil;
 import com.freddy.im.interf.IMSClientInterface;
 import com.freddy.im.protobuf.MessageProtobuf;
 
@@ -10,7 +11,7 @@ import java.util.UUID;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.util.internal.StringUtil;
+import io.netty.channel.SimpleChannelInboundHandler;
 
 /**
  * <p>@ProjectName:     NettyChat</p>
@@ -23,7 +24,7 @@ import io.netty.util.internal.StringUtil;
  * <p>@date:            2019/04/07 21:40</p>
  * <p>@email:           chenshichao@outlook.com</p>
  */
-public class TCPReadHandler extends ChannelInboundHandlerAdapter {
+public class TCPReadHandler extends SimpleChannelInboundHandler<MessageProtobuf.Msg> {
 
     private NettyTcpClient imsClient;
 
@@ -37,6 +38,8 @@ public class TCPReadHandler extends ChannelInboundHandlerAdapter {
         System.err.println("TCPReadHandler channelInactive()");
         Channel channel = ctx.channel();
         if (channel != null) {
+            System.err.println("channel id："+channel.id().asLongText());
+
             channel.close();
             ctx.close();
         }
@@ -63,6 +66,8 @@ public class TCPReadHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        System.out.println("======xxxx==");
+
         MessageProtobuf.Msg message = (MessageProtobuf.Msg) msg;
         if (message == null || message.getHead() == null) {
             return;
@@ -72,10 +77,10 @@ public class TCPReadHandler extends ChannelInboundHandlerAdapter {
         if (msgType == imsClient.getServerSentReportMsgType()) {
             int statusReport = message.getHead().getStatusReport();
             System.out.println(String.format("服务端状态报告：「%d」, 1代表成功，0代表失败", statusReport));
-            if (statusReport == IMSConfig.DEFAULT_REPORT_SERVER_SEND_MSG_SUCCESSFUL) {
+//            if (statusReport == IMSConfig.DEFAULT_REPORT_SERVER_SEND_MSG_SUCCESSFUL) {
                 System.out.println("收到服务端消息发送状态报告，message=" + message + "，从超时管理器移除");
                 imsClient.getMsgTimeoutTimerManager().remove(message.getHead().getMsgId());
-            }
+//            }
         } else {
             // 其它消息
             // 收到消息后，立马给服务端回一条消息接收状态报告
@@ -88,6 +93,11 @@ public class TCPReadHandler extends ChannelInboundHandlerAdapter {
 
         // 接收消息，由消息转发器转发到应用层
         imsClient.getMsgDispatcher().receivedMsg(message);
+    }
+
+    @Override
+    protected void messageReceived(ChannelHandlerContext channelHandlerContext, MessageProtobuf.Msg msg) throws Exception {
+        System.out.println("cccccc");
     }
 
     /**

@@ -6,6 +6,7 @@ import com.freddy.im.HeartbeatHandler;
 import com.freddy.im.IMSConfig;
 import com.freddy.im.MsgDispatcher;
 import com.freddy.im.MsgTimeoutTimerManager;
+import com.freddy.im.StringUtil;
 import com.freddy.im.interf.IMSClientInterface;
 import com.freddy.im.listener.IMSConnectStatusCallback;
 import com.freddy.im.listener.OnEventListener;
@@ -21,7 +22,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.timeout.IdleStateHandler;
-import io.netty.util.internal.StringUtil;
 
 /**
  * <p>@ProjectName:     NettyChat</p>
@@ -561,14 +561,26 @@ public class NettyTcpClient implements IMSClientInterface {
     private void closeChannel() {
         try {
             if (channel != null) {
-                channel.close();
-                channel.eventLoop().shutdownGracefully();
+                try {
+                    removeHandler(HeartbeatHandler.class.getSimpleName());
+                    removeHandler(TCPReadHandler.class.getSimpleName());
+                    removeHandler(IdleStateHandler.class.getSimpleName());
+                } finally {
+                    try {
+                        channel.close();
+                    } catch (Exception ex) {
+                    }
+                    try {
+                        channel.eventLoop().shutdownGracefully();
+                    } catch (Exception ex) {
+                    }
+
+                    channel = null;
+                }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.err.println("关闭channel出错，reason:" + e.getMessage());
-        } finally {
-            channel = null;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            System.out.println("关闭channel出错，reason:" + ex.getMessage());
         }
     }
 

@@ -5,6 +5,7 @@ import com.freddy.im.protobuf.MessageProtobuf;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.SimpleChannelInboundHandler;
 
 /**
  * <p>@ProjectName:     NettyChat</p>
@@ -17,7 +18,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  * <p>@date:            2019/04/08 01:08</p>
  * <p>@email:           chenshichao@outlook.com</p>
  */
-public class HeartbeatRespHandler extends ChannelInboundHandlerAdapter {
+public class HeartbeatRespHandler extends SimpleChannelInboundHandler<MessageProtobuf.Msg> {
 
     private NettyTcpClient imsClient;
 
@@ -27,6 +28,8 @@ public class HeartbeatRespHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        System.out.println("======cccc==");
+
         MessageProtobuf.Msg heartbeatRespMsg = (MessageProtobuf.Msg) msg;
         if (heartbeatRespMsg == null || heartbeatRespMsg.getHead() == null) {
             return;
@@ -44,5 +47,10 @@ public class HeartbeatRespHandler extends ChannelInboundHandlerAdapter {
             // 消息透传
             ctx.fireChannelRead(msg);
         }
+    }
+
+    @Override
+    protected void messageReceived(ChannelHandlerContext channelHandlerContext, MessageProtobuf.Msg msg) throws Exception {
+        System.out.println("======cccc");
     }
 }

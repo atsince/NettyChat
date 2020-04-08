@@ -5,6 +5,7 @@ import com.freddy.im.protobuf.MessageProtobuf;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 
@@ -19,7 +20,7 @@ import io.netty.handler.timeout.IdleStateEvent;
  * <p>@date:            2019/04/08 01:34</p>
  * <p>@email:           chenshichao@outlook.com</p>
  */
-public class HeartbeatHandler extends ChannelInboundHandlerAdapter {
+public class HeartbeatHandler extends SimpleChannelInboundHandler<MessageProtobuf.Msg> {
 
     private NettyTcpClient imsClient;
     public HeartbeatHandler(NettyTcpClient imsClient) {
@@ -52,6 +53,12 @@ public class HeartbeatHandler extends ChannelInboundHandlerAdapter {
     }
 
     private HeartbeatTask heartbeatTask;
+
+    @Override
+    protected void messageReceived(ChannelHandlerContext channelHandlerContext, MessageProtobuf.Msg msg) throws Exception {
+
+    }
+
     private class HeartbeatTask implements Runnable {
 
         private ChannelHandlerContext ctx;

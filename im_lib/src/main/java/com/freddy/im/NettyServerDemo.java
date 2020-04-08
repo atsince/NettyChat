@@ -134,7 +134,7 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
             case 1001: {
                 String fromId = message.getHead().getFromId();
                 JSONObject jsonObj = JSON.parseObject(message.getHead().getExtend());
-                String token = jsonObj.getString("token");
+                String token = jsonObj.getString("deviceId");
                 JSONObject resp = new JSONObject();
                 if (token.equals("token_" + fromId)) {
                     resp.put("status", 1);
@@ -146,6 +146,8 @@ class ServerHandler extends ChannelInboundHandlerAdapter {
                 }
 
                 message = message.toBuilder().setHead(message.getHead().toBuilder().setExtend(resp.toString()).build()).build();
+                System.out.println("发送给客户端的消息：" + message);
+
                 ChannelContainer.getInstance().getActiveChannelByUserId(fromId).getChannel().writeAndFlush(message);
                 break;
             }

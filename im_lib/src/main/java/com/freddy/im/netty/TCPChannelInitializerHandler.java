@@ -7,10 +7,13 @@ import com.freddy.im.protobuf.MessageProtobuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
+import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufEncoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32FrameDecoder;
+import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 
 /**
  * <p>@ProjectName:     NettyChat</p>
@@ -23,7 +26,7 @@ import io.netty.handler.codec.protobuf.ProtobufEncoder;
  * <p>@date:            2019/04/05 07:11</p>
  * <p>@email:           chenshichao@outlook.com</p>
  */
-public class TCPChannelInitializerHandler extends ChannelInitializer<Channel> {
+public class TCPChannelInitializerHandler extends ChannelInitializer<SocketChannel> {
 
     private NettyTcpClient imsClient;
 
@@ -32,19 +35,40 @@ public class TCPChannelInitializerHandler extends ChannelInitializer<Channel> {
     }
 
     @Override
-    protected void initChannel(Channel channel) throws Exception {
+    protected void initChannel(SocketChannel channel) throws Exception {
         ChannelPipeline pipeline = channel.pipeline();
 
-        // netty提供的自定义长度解码器，解决TCP拆包/粘包问题
-        pipeline.addLast("frameEncoder", new LengthFieldPrepender(2));
-        pipeline.addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65535,
-                0, 2, 0, 2));
+//        // netty提供的自定义长度解码器，解决TCP拆包/粘包问题
+//        pipeline.addLast("frameEncoder", new LengthFieldPrepender(2));
+//        pipeline.addLast("frameDecoder", new LengthFieldBasedFrameDecoder(65535,
+//                0, 2, 0, 2));
+//
+//        // 增加protobuf编解码支持
+//        pipeline.addLast(new ProtobufEncoder());
+//        pipeline.addLast(new ProtobufDecoder(MessageProtobuf.Msg.getDefaultInstance()));
+//
+////        // 握手认证消息响应处理handler
+////        pipeline.addLast(LoginAuthRespHandler.class.getSimpleName(), new LoginAuthRespHandler(imsClient));
+////        // 心跳消息响应处理handler
+////        pipeline.addLast(HeartbeatRespHandler.class.getSimpleName(), new HeartbeatRespHandler(imsClient));
+////        // 接收消息处理handler
+////        pipeline.addLast(TCPReadHandler.class.getSimpleName(), new TCPReadHandler(imsClient));
+//        // 握手认证消息响应处理handler
+//        pipeline.addLast( new LoginAuthRespHandler(imsClient));
+//        // 心跳消息响应处理handler
+//        pipeline.addLast( new HeartbeatRespHandler(imsClient));
+//        // 接收消息处理handler
+//        pipeline.addLast( new TCPReadHandler(imsClient));
 
-        // 增加protobuf编解码支持
-        pipeline.addLast(new ProtobufEncoder());
+//        ChannelPipeline pipeline = ch.pipeline();
+        pipeline.addLast(new ProtobufVarint32FrameDecoder());
         pipeline.addLast(new ProtobufDecoder(MessageProtobuf.Msg.getDefaultInstance()));
+        pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
+        pipeline.addLast(new ProtobufEncoder());
+//        pipeline.addLast(new LoginAuthRespHandler(imsClient));
+//        pipeline.addLast( new HeartbeatRespHandler(imsClient));
+//        pipeline.addLast( new TCPReadHandler(imsClient));
 
-        // 握手认证消息响应处理handler
         pipeline.addLast(LoginAuthRespHandler.class.getSimpleName(), new LoginAuthRespHandler(imsClient));
         // 心跳消息响应处理handler
         pipeline.addLast(HeartbeatRespHandler.class.getSimpleName(), new HeartbeatRespHandler(imsClient));

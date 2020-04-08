@@ -10,6 +10,7 @@ import java.util.UUID;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.SimpleChannelInboundHandler;
 
 /**
  * <p>@ProjectName:     NettyChat</p>
@@ -22,7 +23,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  * <p>@date:            2019/04/07 23:11</p>
  * <p>@email:           chenshichao@outlook.com</p>
  */
-public class LoginAuthRespHandler extends ChannelInboundHandlerAdapter {
+public class LoginAuthRespHandler extends SimpleChannelInboundHandler<MessageProtobuf.Msg> {
 
     private NettyTcpClient imsClient;
 
@@ -32,6 +33,8 @@ public class LoginAuthRespHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        System.out.println("======AuthResp message=======");
+
         MessageProtobuf.Msg handshakeRespMsg = (MessageProtobuf.Msg) msg;
         if (handshakeRespMsg == null || handshakeRespMsg.getHead() == null) {
             return;
@@ -75,5 +78,11 @@ public class LoginAuthRespHandler extends ChannelInboundHandlerAdapter {
             // 消息透传
             ctx.fireChannelRead(msg);
         }
+    }
+
+    @Override
+    protected void messageReceived(ChannelHandlerContext channelHandlerContext, MessageProtobuf.Msg msg) throws Exception {
+        System.out.println("=========，message2=");
+
     }
 }

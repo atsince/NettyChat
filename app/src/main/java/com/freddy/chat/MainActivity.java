@@ -24,9 +24,12 @@ public class MainActivity extends AppCompatActivity implements I_CEventListener 
     private EditText mEditText;
     private TextView mTextView;
 
-    String userId = "100002";
+    String userId = "9999";
     String token = "token_" + userId;
-    String hosts = "[{\"host\":\"192.168.0.102\", \"port\":8855}]";
+//    String hosts = "[{\"host\":\"192.168.0.102\", \"port\":8855}]";
+//    String hosts = "[{\"host\":\"192.168.1.26\", \"port\":8855}]";
+    String hosts = "[{\"host\":\"192.168.1.26\", \"port\":8686}]";
+//    String hosts = "[{\"host\":\"39.96.8.22\", \"port\":8096}]";
 
     private static final String[] EVENTS = {
             Events.CHAT_SINGLE_MESSAGE
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements I_CEventListener 
         message.setMsgType(MessageType.SINGLE_CHAT.getMsgType());
         message.setMsgContentType(MessageType.MessageContentType.TEXT.getMsgContentType());
         message.setFromId(userId);
-        message.setToId("100001");
+        message.setToId("123");
         message.setTimestamp(System.currentTimeMillis());
         message.setContent(mEditText.getText().toString());
 

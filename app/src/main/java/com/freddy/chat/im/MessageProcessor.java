@@ -42,12 +42,15 @@ public class MessageProcessor implements IMessageProcessor {
      */
     @Override
     public void receiveMsg(final AppMessage message) {
+        Log.e(TAG, "receiveMsg，msgType=" + message.getHead().getMsgType());
+
         CThreadPoolExecutor.runInBackground(new Runnable() {
 
             @Override
             public void run() {
                 try {
                     IMessageHandler messageHandler = MessageHandlerFactory.getHandlerByMsgType(message.getHead().getMsgType());
+
                     if (messageHandler != null) {
                         messageHandler.execute(message);
                     } else {
