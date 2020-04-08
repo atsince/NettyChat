@@ -30,6 +30,7 @@ public class HeartbeatHandler extends SimpleChannelInboundHandler<MessageProtobu
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
         super.userEventTriggered(ctx, evt);
+        System.out.println("======HeartbeatHandler ======userEventTriggered=");
         if (evt instanceof IdleStateEvent) {
             IdleState state = ((IdleStateEvent) evt).state();
             switch (state) {
@@ -52,11 +53,35 @@ public class HeartbeatHandler extends SimpleChannelInboundHandler<MessageProtobu
         }
     }
 
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        super.channelRead(ctx, msg);
+        System.out.println("======HeartbeatHandler ======channelRead=");
+        MessageProtobuf.Msg heartbeatRespMsg = (MessageProtobuf.Msg) msg;
+        if (heartbeatRespMsg == null || heartbeatRespMsg.getHead() == null) {
+            return;
+        }
+
+        MessageProtobuf.Msg heartbeatMsg = imsClient.getHeartbeatMsg();
+        if (heartbeatMsg == null || heartbeatMsg.getHead() == null) {
+            return;
+        }
+
+        int heartbeatMsgType = heartbeatMsg.getHead().getMsgType();
+        if (heartbeatMsgType == heartbeatRespMsg.getHead().getMsgType()) {
+            System.out.println("收到服务端心跳响应消息，message=" + heartbeatRespMsg);
+        } else {
+            // 消息透传
+            System.out.println("==HeartbeatHandler==channelRead==aaa==消息透传");
+            ctx.fireChannelRead(msg);
+        }
+    }
+
     private HeartbeatTask heartbeatTask;
 
     @Override
     protected void messageReceived(ChannelHandlerContext channelHandlerContext, MessageProtobuf.Msg msg) throws Exception {
-
+        System.out.println("======HeartbeatHandler ======messageReceived=");
     }
 
     private class HeartbeatTask implements Runnable {

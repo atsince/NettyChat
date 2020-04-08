@@ -28,7 +28,7 @@ public class HeartbeatRespHandler extends SimpleChannelInboundHandler<MessagePro
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println("======cccc==");
+        System.out.println("==HeartbeatRespHandler==channelRead==cccc==");
 
         MessageProtobuf.Msg heartbeatRespMsg = (MessageProtobuf.Msg) msg;
         if (heartbeatRespMsg == null || heartbeatRespMsg.getHead() == null) {
@@ -45,12 +45,13 @@ public class HeartbeatRespHandler extends SimpleChannelInboundHandler<MessagePro
             System.out.println("收到服务端心跳响应消息，message=" + heartbeatRespMsg);
         } else {
             // 消息透传
+            System.out.println("==HeartbeatRespHandler==channelRead==cccc==消息透传");
             ctx.fireChannelRead(msg);
         }
     }
 
     @Override
     protected void messageReceived(ChannelHandlerContext channelHandlerContext, MessageProtobuf.Msg msg) throws Exception {
-        System.out.println("======cccc");
+        System.out.println("HeartbeatRespHandler===messageReceived===cccc");
     }
 }

@@ -35,10 +35,10 @@ public class IMSClientBootstrap {
     }
 
     public static void main(String[] args) {
-        String userId = "100001";
+        String userId = "1111";
         String token = "token_" + userId;
         IMSClientBootstrap bootstrap = IMSClientBootstrap.getInstance();
-        String hosts = "[{\"host\":\"127.0.0.1\", \"port\":8866}]";
+        String hosts = "[{\"host\":\"192.168.30.106\", \"port\":8080}]";
         bootstrap.init(userId, token, hosts, 0);
     }
 

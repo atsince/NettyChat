@@ -33,7 +33,7 @@ public class LoginAuthRespHandler extends SimpleChannelInboundHandler<MessagePro
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println("======AuthResp message=======");
+        System.out.println("======LoginAuthRespHandler ======channelRead=");
 
         MessageProtobuf.Msg handshakeRespMsg = (MessageProtobuf.Msg) msg;
         if (handshakeRespMsg == null || handshakeRespMsg.getHead() == null) {
@@ -82,7 +82,7 @@ public class LoginAuthRespHandler extends SimpleChannelInboundHandler<MessagePro
 
     @Override
     protected void messageReceived(ChannelHandlerContext channelHandlerContext, MessageProtobuf.Msg msg) throws Exception {
-        System.out.println("=========，message2=");
+        System.out.println("======LoginAuthRespHandler ======messageReceived=");
 
     }
 }

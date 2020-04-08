@@ -21,15 +21,16 @@ import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity implements I_CEventListener {
 
-    private EditText mEditText;
+    private EditText mEditText,mFromUserId,mToUserId;
     private TextView mTextView;
 
-    String userId = "9999";
+    String userId = "1111";
+    String toUserId="";
     String token = "token_" + userId;
 //    String hosts = "[{\"host\":\"192.168.0.102\", \"port\":8855}]";
 //    String hosts = "[{\"host\":\"192.168.1.26\", \"port\":8855}]";
-    String hosts = "[{\"host\":\"192.168.1.26\", \"port\":8686}]";
-//    String hosts = "[{\"host\":\"39.96.8.22\", \"port\":8096}]";
+  //  String hosts = "[{\"host\":\"192.168.30.106\", \"port\":8096}]";
+    String hosts = "[{\"host\":\"39.96.8.22\", \"port\":8096}]";
 
     private static final String[] EVENTS = {
             Events.CHAT_SINGLE_MESSAGE
@@ -39,13 +40,11 @@ public class MainActivity extends AppCompatActivity implements I_CEventListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        mFromUserId = findViewById(R.id.et_fromUserId);
+        mToUserId = findViewById(R.id.et_toUserId);
         mEditText = findViewById(R.id.et_content);
         mTextView = findViewById(R.id.tv_msg);
 
-        IMSClientBootstrap.getInstance().init(userId, token, hosts, 1);
-
-        CEventCenter.registerEventListener(this, EVENTS);
     }
 
     public void sendMsg(View view) {
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements I_CEventListener 
         message.setMsgType(MessageType.SINGLE_CHAT.getMsgType());
         message.setMsgContentType(MessageType.MessageContentType.TEXT.getMsgContentType());
         message.setFromId(userId);
-        message.setToId("123");
+        message.setToId(toUserId);
         message.setTimestamp(System.currentTimeMillis());
         message.setContent(mEditText.getText().toString());
 
@@ -86,5 +85,12 @@ public class MainActivity extends AppCompatActivity implements I_CEventListener 
             default:
                 break;
         }
+    }
+
+    public void connect(View view) {
+        userId=mFromUserId.getText().toString();
+        toUserId=mToUserId.getText().toString();
+        IMSClientBootstrap.getInstance().init(userId, token, hosts, 1);
+        CEventCenter.registerEventListener(this, EVENTS);
     }
 }

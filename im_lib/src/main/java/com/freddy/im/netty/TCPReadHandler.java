@@ -66,7 +66,7 @@ public class TCPReadHandler extends SimpleChannelInboundHandler<MessageProtobuf.
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        System.out.println("======xxxx==");
+        System.out.println("====TCPReadHandler==xxxx==");
 
         MessageProtobuf.Msg message = (MessageProtobuf.Msg) msg;
         if (message == null || message.getHead() == null) {
@@ -77,10 +77,10 @@ public class TCPReadHandler extends SimpleChannelInboundHandler<MessageProtobuf.
         if (msgType == imsClient.getServerSentReportMsgType()) {
             int statusReport = message.getHead().getStatusReport();
             System.out.println(String.format("服务端状态报告：「%d」, 1代表成功，0代表失败", statusReport));
-//            if (statusReport == IMSConfig.DEFAULT_REPORT_SERVER_SEND_MSG_SUCCESSFUL) {
+           if (statusReport == IMSConfig.DEFAULT_REPORT_SERVER_SEND_MSG_SUCCESSFUL) {
                 System.out.println("收到服务端消息发送状态报告，message=" + message + "，从超时管理器移除");
                 imsClient.getMsgTimeoutTimerManager().remove(message.getHead().getMsgId());
-//            }
+          }
         } else {
             // 其它消息
             // 收到消息后，立马给服务端回一条消息接收状态报告
@@ -97,7 +97,7 @@ public class TCPReadHandler extends SimpleChannelInboundHandler<MessageProtobuf.
 
     @Override
     protected void messageReceived(ChannelHandlerContext channelHandlerContext, MessageProtobuf.Msg msg) throws Exception {
-        System.out.println("cccccc");
+        System.out.println("TCPReadHandler========cccccc");
     }
 
     /**
