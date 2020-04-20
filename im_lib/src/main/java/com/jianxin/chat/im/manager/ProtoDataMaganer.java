@@ -30,7 +30,7 @@ import com.jianxin.chat.net.OKHttpHelper;
 import com.jianxin.chat.net.base.ResponseData;
 import com.jianxin.chat.net.response.ResponseProtoMessage;
 import com.jianxin.chat.utils.CThreadPoolExecutor;
-import com.jianxin.im.protobuf.MessageProtobuf;
+import com.jianxin.chat.im.netty.protobuf.MessageProtobuf;
 
 import java.util.ArrayList;
 import java.util.HashMap;

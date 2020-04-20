@@ -1,6 +1,6 @@
 package com.jianxin.chat.im;
 
-import com.jianxin.im.listener.IMSConnectStatusCallback;
+import com.jianxin.chat.im.netty.interf.IMSConnectStatusCallback;
 
 /**
  * <p>@ProjectName:     NettyChat</p>

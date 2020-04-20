@@ -9,8 +9,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.jianxin.chat.NettyChatApp;
 import com.jianxin.chat.bean.core.MessageType;
 import com.jianxin.chat.im.manager.ProtoDataMaganer;
-import com.jianxin.im.listener.OnEventListener;
-import com.jianxin.im.protobuf.MessageProtobuf;
+import com.jianxin.chat.im.netty.interf.OnEventListener;
+import com.jianxin.chat.im.netty.protobuf.MessageProtobuf;
 
 /**
  * <p>@ProjectName:     NettyChat</p>

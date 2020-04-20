@@ -1,15 +1,13 @@
 package com.jianxin.chat.im.client;
 
-import android.util.Log;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jianxin.chat.im.IMSConnectStatusListener;
 import com.jianxin.chat.im.IMSEventListener;
-import com.jianxin.im.IMSClientFactory;
-import com.jianxin.im.interf.IMSClientInterface;
-import com.jianxin.im.protobuf.MessageProtobuf;
+import com.jianxin.chat.im.netty.IMSClientFactory;
+import com.jianxin.chat.im.netty.interf.IMSClientInterface;
+import com.jianxin.chat.im.netty.protobuf.MessageProtobuf;
 
 import java.util.Vector;
 

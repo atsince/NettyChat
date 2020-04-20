@@ -4,7 +4,7 @@ import com.jianxin.chat.bean.core.MessageDirection;
 import com.jianxin.chat.model.proto.ProtoMessage;
 import com.jianxin.chat.model.proto.ProtoMessageContent;
 import com.jianxin.chat.utils.StringUtil;
-import com.jianxin.im.protobuf.MessageProtobuf;
+import com.jianxin.chat.im.netty.protobuf.MessageProtobuf;
 
 /**
  * <p>@ProjectName:     BoChat</p>
