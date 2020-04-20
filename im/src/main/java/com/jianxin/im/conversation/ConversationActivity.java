@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.jianxin.chat.model.Conversation;
-import com.jianxin.im.IMServiceStatusViewModel;
+import com.jianxin.im.viewmodel.IMServiceStatusViewModel;
 import com.jianxin.im.R;
 import com.jianxin.im.WfcBaseActivity;
 

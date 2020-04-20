@@ -10,7 +10,7 @@ import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.widget.Toast;
 
-import com.jianxin.chat.NettyChatApp;
+import com.jianxin.chat.ImApp;
 
 import androidx.core.graphics.drawable.RoundedBitmapDrawable;
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -56,7 +56,7 @@ public class UIUtils {
      * @return
      */
     public static Context getContext() {
-        return NettyChatApp.sharedInstance().getApplicationContext();
+        return ImApp.getContext().getApplicationContext();
     }
 
     /**
@@ -122,7 +122,7 @@ public class UIUtils {
      * @return
      */
     public static Handler getMainThreadHandler() {
-        return NettyChatApp.getMainHandler();
+        return ImApp.getMainHandler();
     }
 
     /**
@@ -131,7 +131,7 @@ public class UIUtils {
      * @return
      */
     public static long getMainThreadId() {
-        return NettyChatApp.getMainThreadId();
+        return ImApp.getMainThreadId();
     }
 
     /**

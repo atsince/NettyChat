@@ -22,6 +22,6 @@ public interface MessageDao {
     @Delete
     void deleteWords(ProtoMessage... protoMessage);
 
-    @Query("SELECT * FROM protomMessage WHERE target LIKE :target AND ConversationType LIKE :conversionType AND  timestamp <:timestamp ORDER BY timestamp DESC LIMIT 20")
-    List<ProtoMessage> getMessages(int conversionType,String target,long timestamp);
+    @Query("SELECT * FROM protomMessage WHERE target LIKE :target AND ConversationType LIKE :conversionType AND  messageId <:messageId ORDER BY timestamp DESC LIMIT 20")
+    List<ProtoMessage> getMessages(int conversionType,String target,long messageId);
 }

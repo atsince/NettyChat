@@ -72,7 +72,7 @@ public class ProtoDataMaganer {
         mConversationInfoDao = db.ConversationInfoDao();
         initConversationInfoMap();
         OKHttpHelper.init(context);
-        IMSClientBootstrap.getInstance().init(userId, token, hosts, appStatus);
+        IMSClientBootstrap.getInstance().init(context,userId, token, hosts, appStatus);
     }
 private void initConversationInfoMap(){
     protoConversationInfoMap.clear();

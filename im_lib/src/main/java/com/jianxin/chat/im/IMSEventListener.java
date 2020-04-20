@@ -6,7 +6,6 @@ import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jianxin.chat.NettyChatApp;
 import com.jianxin.chat.bean.core.MessageType;
 import com.jianxin.chat.im.manager.ProtoDataMaganer;
 import com.jianxin.chat.im.netty.interf.OnEventListener;
@@ -27,10 +26,11 @@ public class IMSEventListener implements OnEventListener {
 
     private String userId;
     private String token;
-
-    public IMSEventListener(String userId, String token) {
+    private Context context;
+    public IMSEventListener(Context context,String userId, String token) {
         this.userId = userId;
         this.token = token;
+        this.context=context;
     }
 
     /**
@@ -54,7 +54,7 @@ public class IMSEventListener implements OnEventListener {
      */
     @Override
     public boolean isNetworkAvailable() {
-        ConnectivityManager cm = (ConnectivityManager) NettyChatApp.sharedInstance().getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info = cm.getActiveNetworkInfo();
         return info != null && info.isConnected();
     }

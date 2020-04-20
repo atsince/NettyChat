@@ -1,5 +1,7 @@
 package com.jianxin.chat.im.client;
 
+import android.content.Context;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -36,15 +38,9 @@ public class IMSClientBootstrap {
         return INSTANCE;
     }
 
-    public static void main(String[] args) {
-        String userId = "1111";
-        String token = "token_" + userId;
-        IMSClientBootstrap bootstrap = IMSClientBootstrap.getInstance();
-        String hosts = "[{\"host\":\"192.168.30.106\", \"port\":8080}]";
-        bootstrap.init(userId, token, hosts, 0);
-    }
 
-    public synchronized void init(String userId, String token, String hosts, int appStatus) {
+
+    public synchronized void init(Context context, String userId, String token, String hosts, int appStatus) {
 
         Vector<String> serverUrlList = convertHosts(hosts);
         if (serverUrlList == null || serverUrlList.size() == 0) {
@@ -59,7 +55,7 @@ public class IMSClientBootstrap {
         }
         imsClient = IMSClientFactory.getIMSClient();
         updateAppStatus(appStatus);
-        imsClient.init(serverUrlList, new IMSEventListener(userId, token), new IMSConnectStatusListener());
+        imsClient.init(serverUrlList, new IMSEventListener(context,userId, token), new IMSConnectStatusListener());
     }
 
     public boolean isActive() {

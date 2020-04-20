@@ -6,6 +6,7 @@ import com.jianxin.chat.bean.ConnectionStatus;
 import com.jianxin.chat.im.manager.ChatManager;
 import com.jianxin.chat.model.Conversation;
 import com.jianxin.im.AppContext;
+import com.jianxin.im.ImChatApp;
 import com.jianxin.im.R;
 import com.jianxin.im.conversationlist.notification.ConnectionStatusNotification;
 import com.jianxin.im.conversationlist.notification.StatusNotificationViewModel;
@@ -93,7 +94,7 @@ public class ConversationListFragment extends ProgressFragment {
 //            }
 //        });
 
-        StatusNotificationViewModel statusNotificationViewModel = AppContext.getAppScopeViewModel(StatusNotificationViewModel.class);
+        StatusNotificationViewModel statusNotificationViewModel = ImChatApp.getAppScopeViewModel(StatusNotificationViewModel.class);
         statusNotificationViewModel.statusNotificationLiveData().observe(this, new Observer<Object>() {
             @Override
             public void onChanged(Object o) {

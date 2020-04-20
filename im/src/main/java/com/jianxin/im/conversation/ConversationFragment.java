@@ -20,6 +20,7 @@ import com.jianxin.chat.bean.core.PersistFlag;
 import com.jianxin.chat.bean.message.MessageContent;
 import com.jianxin.chat.model.Conversation;
 import com.jianxin.im.AppContext;
+import com.jianxin.im.ImChatApp;
 import com.jianxin.im.R;
 import com.jianxin.im.conversation.message.model.UiMessage;
 import com.jianxin.im.utils.UIUtils;
@@ -338,7 +339,7 @@ public class ConversationFragment extends Fragment implements
        inputPanel.setOnConversationInputPanelStateChangeListener(this);
 
        // settingViewModel = ViewModelProviders.of(this).get(SettingViewModel.class);
-       conversationViewModel = AppContext.getAppScopeViewModel(ConversationViewModel.class);
+       conversationViewModel = ImChatApp.getAppScopeViewModel(ConversationViewModel.class);
         conversationViewModel.clearConversationMessageLiveData().observeForever(clearConversationMessageObserver);
        messageViewModel = ViewModelProviders.of(this).get(MessageViewModel.class);
 

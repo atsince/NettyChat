@@ -1,4 +1,4 @@
-package com.jianxin.im;
+package com.jianxin.im.viewmodel;
 
 import com.jianxin.chat.im.manager.ChatManager;
 import com.jianxin.chat.remote.IMServiceStatusListener;
